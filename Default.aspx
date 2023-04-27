@@ -14,7 +14,9 @@
             <asp:TextBox ID="TextBoxNota" runat="server"></asp:TextBox>
 &nbsp;<asp:Button ID="ButtonNota" runat="server" Text="Ingresar Nota" class ="btn-warning btn-md" OnClick="ButtonNota_Click" />
         </p>
-        <p><asp:Button ID="ButtonIngresar" runat="server" Text="Ingresar Alumno" class ="btn-primary btn-lg" OnClick="ButtonIngresar_Click" />
+        <p><asp:Button ID="ButtonMostrar" runat="server" Text="Mostrar" class ="btn-primary btn-lg" OnClick="ButtonIngresar_Click" />
+            <asp:GridView ID="GridView1" runat="server">
+            </asp:GridView>
         </p>
     </div>
 

@@ -71,9 +71,9 @@ namespace LaboratorioJson
                 alumnoExiste.Cursos.Add(cursoNuevo);
                 //se manda a grabar de nuevo
                 Grabar(registros);
-            }
+            } 
             // si el alumno no existe se agrega un nuevo registro
-            //con una sola nota, para las demás notas se usara el codigo anterior
+            //con una sola nota, para las demás notas se usara el codigo dentro del if
             //cuando ya hay al menos una nota
             else
             {
@@ -97,14 +97,11 @@ namespace LaboratorioJson
         }
         protected void ButtonIngresar_Click(object sender, EventArgs e)
         {
-            //Registro registro = new Registro();
-            //registro.Nombre = TextBoxAlumno.Text;
-            //registro.Cursos = cursosTemporal.ToList();
+            List<Registro> registros = new List<Registro>();            
+            registros = Leer();
+            GridView1.DataSource = registros;
+            GridView1.DataBind();
 
-            //registros.Add(registro);
-            //cursosTemporal.Clear();
-
-            //Grabar();
         }
     }
 }

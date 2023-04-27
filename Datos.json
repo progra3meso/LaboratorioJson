@@ -1,1 +1,1 @@
-[{"Nombre":"a3","Cursos":[]}]
+[{"Nombre":"a3","Cursos":[]},{"Nombre":"Jose","Cursos":[{"Nombre":"fisica","Nota":80},{"Nombre":"mate","Nota":85},{"Nombre":"curso 1","Nota":50}]},{"Nombre":"Pedro","Cursos":[{"Nombre":"curso 1","Nota":50}]}]
