@@ -42,15 +42,7 @@ namespace LaboratorioJson
 
 
         protected void ButtonNota_Click(object sender, EventArgs e)
-        {
-            //Curso curso = new Curso();
-            //curso.Nombre = TextBoxCurso.Text;
-            //curso.Nota = Convert.ToInt32(TextBoxNota.Text);
-            //Registro registro = new Registro();
-            //registro.Nombre = TextBoxAlumno.Text;
-            //curso.
-            //cursosTemporal.Add(curso);            
-
+        {              
             //Crear una lista de registros
             List<Registro> registros = new List<Registro>();
             //Leer el archivo, y este devuelve una lista de Registros
@@ -64,7 +56,8 @@ namespace LaboratorioJson
             cursoNuevo.Nombre = TextBoxCurso.Text;
             cursoNuevo.Nota = Convert.ToInt16(TextBoxNota.Text);
 
-            //SI el alumno ya existe solo se le agrega la nota
+            //SI el alumno ya existe (no es null, sino que devolvió algo)
+            //solo se le agrega el curso a ese alumno.
             if (alumnoExiste != null)
             {
                 //al alumno existente se le agrega el nuevo curso
@@ -72,9 +65,9 @@ namespace LaboratorioJson
                 //se manda a grabar de nuevo
                 Grabar(registros);
             } 
-            // si el alumno no existe se agrega un nuevo registro
-            //con una sola nota, para las demás notas se usara el codigo dentro del if
-            //cuando ya hay al menos una nota
+            // si el alumno no existe se agrega un nuevo registro completo: alumno y curso
+            //Se le agrega una sola nota, para las demás notas se usara el codigo dentro del if
+            //cuando ya hay existe el alumno
             else
             {
                 //se crea un nuevo registro
@@ -88,12 +81,6 @@ namespace LaboratorioJson
                 //se manda a grabar
                 Grabar(registros);
             }
-
-
-
-
-
-
         }
         protected void ButtonIngresar_Click(object sender, EventArgs e)
         {
