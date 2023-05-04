@@ -57,26 +57,34 @@ namespace LaboratorioJson
             //si no existe la universidad crear una nueva
             if (universidadExiste == null) 
             {
+                //Crear una nueva universidad
                 Universidad universidadNueva = new Universidad();
 
+                //El nombre de la universidad se trae desde el dropdownlist
                 universidadNueva.NombreUniversidad = DropDownListUniversidad.SelectedValue;
 
                 //crear un nuevo alumno
                 Alumno alumnoNuevo = new Alumno();
+                //el nombre del alumno se trae desde el textbox
                 alumnoNuevo.Nombre = TextBoxAlumno.Text;
 
                 //crear el nuevo curso
                 Curso cursoNuevo = new Curso();
+                //el nombre del curso y la nota se traen desde los textbox
                 cursoNuevo.Nombre = TextBoxCurso.Text;
                 cursoNuevo.Nota = Convert.ToInt16(TextBoxNota.Text);
 
+                //Al alumno se le agrega el curso nuevo
                 alumnoNuevo.Cursos.Add(cursoNuevo);
 
+                //A la universidad se le agregar el alumno nuevo
                 universidadNueva.Alumnos.Add(alumnoNuevo);
 
+                //A la lista de universidades se le agrega la nueva universidad
                 universidades.Add(universidadNueva);
             }
 
+            //Se manda a grabar la lista de universidades
             Grabar(universidades);
 
         }
