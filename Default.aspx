@@ -4,7 +4,13 @@
 
     <div class="jumbotron">
         <h1>Ingreso de notas</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+        <p class="lead">
+            <asp:DropDownList ID="DropDownListUniversidad" runat="server">
+                <asp:ListItem>Mesoamericana</asp:ListItem>
+                <asp:ListItem>Landivar</asp:ListItem>
+                <asp:ListItem>San Carlos</asp:ListItem>
+            </asp:DropDownList>
+        </p>
         <p class="lead">Nombre del alumno
             <asp:TextBox ID="TextBoxAlumno" runat="server"></asp:TextBox>
         </p>

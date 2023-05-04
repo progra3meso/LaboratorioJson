@@ -11,30 +11,28 @@ namespace LaboratorioJson
 {
     public partial class _Default : Page
     {
-
-        //static List<Curso> cursosTemporal = new List<Curso>();
-        //static List<Registro> registros = new List<Registro>();
-
+         
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void Grabar(List<Registro> registros)
+        private void Grabar(List<Universidad> universidades)
         {
-            string json = JsonConvert.SerializeObject(registros);            
+            string json = JsonConvert.SerializeObject(universidades);            
             string archivo = Server.MapPath("Datos.json");
             System.IO.File.WriteAllText(archivo, json);
         }
 
-        private List<Registro> Leer()
+        
+        private List<Universidad> Leer()
         {
-            List<Registro> lista = new List<Registro>();            
+            List<Universidad> lista = new List<Universidad>();            
             string archivo = Server.MapPath("Datos.json");            
             StreamReader jsonStream = File.OpenText(archivo);
             string json = jsonStream.ReadToEnd();
             jsonStream.Close();            
-            lista = JsonConvert.DeserializeObject<List<Registro>>(json);
+            lista = JsonConvert.DeserializeObject<List<Universidad>>(json);
 
             return lista;
         }
@@ -43,52 +41,48 @@ namespace LaboratorioJson
 
         protected void ButtonNota_Click(object sender, EventArgs e)
         {              
-            //Crear una lista de registros
-            List<Registro> registros = new List<Registro>();
-            //Leer el archivo, y este devuelve una lista de Registros
-            registros = Leer();
+            //Crear una lista de universidades
+            List<Universidad> universidades = new List<Universidad>();
+            //Leer el archivo, y este devuelve una lista de universidades
+            universidades = Leer();
 
-            //Buscar si el alumno ya existe
-            Registro alumnoExiste = registros.Find(a => a.Nombre == TextBoxAlumno.Text);
+            //si es la primera vez que se corre hay que crear la lista de universidad
+            //pues el archivo estará en blanco
+            if (universidades == null)
+                universidades = new List<Universidad>();
 
-            //crear un nuevo curso para guardar el curso y la nota
-            Curso cursoNuevo = new Curso();
-            cursoNuevo.Nombre = TextBoxCurso.Text;
-            cursoNuevo.Nota = Convert.ToInt16(TextBoxNota.Text);
+            //ver si la universidad que se está ingresando ya existe
+            Universidad universidadExiste = universidades.Find(u => u.NombreUniversidad == DropDownListUniversidad.SelectedValue);
 
-            //SI el alumno ya existe (no es null, sino que devolvió algo)
-            //solo se le agrega el curso a ese alumno.
-            if (alumnoExiste != null)
+            //si no existe la universidad crear una nueva
+            if (universidadExiste == null) 
             {
-                //al alumno existente se le agrega el nuevo curso
-                alumnoExiste.Cursos.Add(cursoNuevo);
-                //se manda a grabar de nuevo
-                Grabar(registros);
-            } 
-            // si el alumno no existe se agrega un nuevo registro completo: alumno y curso
-            //Se le agrega una sola nota, para las demás notas se usara el codigo dentro del if
-            //cuando ya hay existe el alumno
-            else
-            {
-                //se crea un nuevo registro
-                Registro registroNuevo = new Registro();
-                //se agrega el nombre del alumno
-                registroNuevo.Nombre = TextBoxAlumno.Text;
-                //y como es nuevo se le agrega el nuevo curso
-                registroNuevo.Cursos.Add(cursoNuevo);
-                //se agrega el registro nuevo a la lista de registros
-                registros.Add(registroNuevo);
-                //se manda a grabar
-                Grabar(registros);
+                Universidad universidadNueva = new Universidad();
+
+                universidadNueva.NombreUniversidad = DropDownListUniversidad.SelectedValue;
+
+                //crear un nuevo alumno
+                Alumno alumnoNuevo = new Alumno();
+                alumnoNuevo.Nombre = TextBoxAlumno.Text;
+
+                //crear el nuevo curso
+                Curso cursoNuevo = new Curso();
+                cursoNuevo.Nombre = TextBoxCurso.Text;
+                cursoNuevo.Nota = Convert.ToInt16(TextBoxNota.Text);
+
+                alumnoNuevo.Cursos.Add(cursoNuevo);
+
+                universidadNueva.Alumnos.Add(alumnoNuevo);
+
+                universidades.Add(universidadNueva);
             }
+
+            Grabar(universidades);
+
         }
         protected void ButtonIngresar_Click(object sender, EventArgs e)
         {
-            List<Registro> registros = new List<Registro>();            
-            registros = Leer();
-            GridView1.DataSource = registros;
-            GridView1.DataBind();
-
+            
         }
     }
 }
