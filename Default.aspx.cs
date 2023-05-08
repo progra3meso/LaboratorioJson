@@ -17,34 +17,14 @@ namespace LaboratorioJson
 
         }
 
-        private void Grabar(List<Universidad> universidades)
-        {
-            string json = JsonConvert.SerializeObject(universidades);            
-            string archivo = Server.MapPath("Datos.json");
-            System.IO.File.WriteAllText(archivo, json);
-        }
-
         
-        private List<Universidad> Leer()
-        {
-            List<Universidad> lista = new List<Universidad>();            
-            string archivo = Server.MapPath("Datos.json");            
-            StreamReader jsonStream = File.OpenText(archivo);
-            string json = jsonStream.ReadToEnd();
-            jsonStream.Close();            
-            lista = JsonConvert.DeserializeObject<List<Universidad>>(json);
-
-            return lista;
-        }
-
-
-
         protected void ButtonNota_Click(object sender, EventArgs e)
-        {              
+        {
+            Archivo archivo = new Archivo();
             //Crear una lista de universidades
             List<Universidad> universidades = new List<Universidad>();
             //Leer el archivo, y este devuelve una lista de universidades
-            universidades = Leer();
+            universidades = archivo.Leer();
 
             //si es la primera vez que se corre hay que crear la lista de universidad
             //pues el archivo estará en blanco
@@ -83,9 +63,51 @@ namespace LaboratorioJson
                 //A la lista de universidades se le agrega la nueva universidad
                 universidades.Add(universidadNueva);
             }
+            else //si la universidad ya existe
+            {
+                //Busar si el alumno ya existe dentro de esa universidad
+                Alumno alumnoExiste = universidadExiste.Alumnos.Find(a => a.Nombre == TextBoxAlumno.Text);
+
+                //Si el alumno no existe crear un nuevo alumno
+                if (alumnoExiste == null)
+                {
+                    Alumno alumnoNuevo = new Alumno();
+                    alumnoNuevo.Nombre = TextBoxAlumno.Text;
+
+                    //como es un alumno nuevo se crea el curso, sin buscar si ya existe
+                    Curso cursoNuevo = new Curso();
+                    //el nombre del curso y la nota se traen desde los textbox
+                    cursoNuevo.Nombre = TextBoxCurso.Text;
+                    cursoNuevo.Nota = Convert.ToInt16(TextBoxNota.Text);
+
+                    alumnoNuevo.Cursos.Add(cursoNuevo);
+
+                    //agregamos al alumno con sus cursos a la universidad existente
+
+                    universidadExiste.Alumnos.Add(alumnoNuevo);
+
+                }
+                else //si el alumno ya existe, ver si el curso ya existe
+                {
+                    Curso cursoExiste = alumnoExiste.Cursos.Find(c => c.Nombre == TextBoxCurso.Text);
+
+                    //si el curso no existe se crea un nuevo curso
+                    if (cursoExiste == null)
+                    {
+                        //Se crea un nuevo curso
+                        Curso cursoNuevo = new Curso();
+                        //el nombre del curso y la nota se traen desde los textbox
+                        cursoNuevo.Nombre = TextBoxCurso.Text;
+                        cursoNuevo.Nota = Convert.ToInt16(TextBoxNota.Text);
+
+                        //se agrega el curso al alumno 
+                        alumnoExiste.Cursos.Add(cursoNuevo);
+                    }
+                }
+            }
 
             //Se manda a grabar la lista de universidades
-            Grabar(universidades);
+            archivo.Grabar(universidades);
 
         }
         protected void ButtonIngresar_Click(object sender, EventArgs e)

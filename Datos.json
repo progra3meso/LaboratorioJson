@@ -13,6 +13,35 @@
             "Nota": 70
           }
         ]
+      },
+      {
+        "NumeroCarne": null,
+        "Nombre": "Alumno 2",
+        "FechaNacimiento": null,
+        "Direccion": null,
+        "Cursos": [
+          {
+            "Nombre": "curso 1",
+            "Nota": 90
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "NombreUniversidad": "San Carlos",
+    "Alumnos": [
+      {
+        "NumeroCarne": null,
+        "Nombre": "AlumnoS",
+        "FechaNacimiento": null,
+        "Direccion": null,
+        "Cursos": [
+          {
+            "Nombre": "fisica",
+            "Nota": 90
+          }
+        ]
       }
     ]
   }
